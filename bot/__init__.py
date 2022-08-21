@@ -137,6 +137,13 @@ EXTENSION_FILTER = set()
 LEECH_LOG = set()
 MIRROR_LOGS = set()
 try:
+    aid = getConfig('LEECH_LOG_ALT')
+    aid = aid.split(' ')
+    for _id in aid:
+        LEECH_LOG_ALT.add(int(_id))
+except:
+    pass
+try:
     aid = getConfig('LEECH_LOG')
     aid = aid.split(' ')
     for _id in aid:
