@@ -126,7 +126,6 @@ def _clone(message, bot, multi=0):
         else:
             msg = sendMarkup(result + cc, bot, message, button)
             LOGGER.info(f'Cloning Done: {name}')
-            Thread(target=auto_delete_message, args=(bot, message, msg)).start()
         if is_gdtot:
             gd.deletefile(link)
         elif is_appdrive:
