@@ -135,6 +135,7 @@ AS_DOC_USERS = set()
 AS_MEDIA_USERS = set()
 EXTENSION_FILTER = set()
 LEECH_LOG = set()
+LEECH_LOG_ALT = set()
 MIRROR_LOGS = set()
 try:
     aid = getConfig('LEECH_LOG_ALT')
