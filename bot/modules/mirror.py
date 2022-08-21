@@ -245,7 +245,7 @@ class MirrorListener:
             msg += f'\n<b>It Tooks:</b> {get_readable_time(time() - self.message.date.timestamp())}'
             msg += f'\n\n<b>Thank You For using {TITLE_NAME}! Keep Supporting & Keep Loving!</b>'
             if not files:
-                sendMarkup(msg, self.bot, self.message)
+                sendMarkup(msg + fmsg, self.bot, self.message, InlineKeyboardMarkup(buttons.build_menu(2)))
             else:
                 fmsg = '\n<b>Your Files Are:</b>\n'
                 for index, (link, name) in enumerate(files.items(), start=1):
@@ -255,7 +255,7 @@ class MirrorListener:
                         sleep(1)
                         fmsg = ''
                 if fmsg != '':
-                    sendMarkup(msg + fmsg, self.bot, self.message)
+                    sendMarkup(msg + fmsg, self.bot, self.message, InlineKeyboardMarkup(buttons.build_menu(2)))
                 if LEECH_LOG:
                     try:
                         for chatid in LEECH_LOG:
