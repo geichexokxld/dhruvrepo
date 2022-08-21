@@ -9,7 +9,7 @@ from bot.helper.telegram_helper.message_utils import sendMessage, sendMarkup, de
 from bot.helper.telegram_helper.filters import CustomFilters
 from bot.helper.telegram_helper.bot_commands import BotCommands
 from bot.helper.mirror_utils.status_utils.clone_status import CloneStatus
-from bot import bot, MIRROR_LOGS, BOT_PM, dispatcher, LOGGER, CLONE_LIMIT, STOP_DUPLICATE, download_dict, download_dict_lock, Interval
+from bot import bot, MIRROR_LOGS, BOT_PM, dispatcher, LOGGER, CLONE_LIMIT, STOP_DUPLICATE, download_dict, download_dict_lock, Interval, LINK_LOGS, EMOJI_THEME
 from bot.helper.ext_utils.bot_utils import get_readable_file_size, is_gdrive_link, is_gdtot_link, new_thread, is_appdrive_link
 from bot.helper.mirror_utils.download_utils.direct_link_generator import gdtot, appdrive
 from bot.helper.ext_utils.exceptions import DirectDownloadLinkException
@@ -53,6 +53,30 @@ def _clone(message, bot, multi=0):
             tag = f"@{reply_to.from_user.username}"
         else:
             tag = reply_to.from_user.mention_html(reply_to.from_user.first_name)
+    mesg = message.text.split('\n')
+    message_args = mesg[0].split(' ', maxsplit=1)
+    user_id = message.from_user.id
+    tag = f"@{message.from_user.username}"
+    if EMOJI_THEME is True:
+        slmsg = f"Added by: {tag} \n👥 User ID: <code>{user_id}</code>\n\n"
+    else:
+        slmsg = f"Added by: {tag} \nUser ID: <code>{user_id}</code>\n\n"
+    if LINK_LOGS:
+            try:
+                f"<code>{message_args[1]}</code>"
+                for link_log in LINK_LOGS:
+                    bot.sendMessage(link_log, text=slmsg + source_link, parse_mode=ParseMode.HTML )
+            except IndexError:
+                pass
+            if reply_to is not None:
+                try:
+                    reply_text = reply_to.text
+                    if is_url(reply_text):
+                        source_link = f"<code>{reply_text.strip()}</code>"
+                        for link_log in LINK_LOGS:
+                            bot.sendMessage(chat_id=link_log, text=slmsg + source_link, parse_mode=ParseMode.HTML )
+                except TypeError:
+                    pass  
     is_gdtot = is_gdtot_link(link)
     is_appdrive = is_appdrive_link(link)
     if is_gdtot:
