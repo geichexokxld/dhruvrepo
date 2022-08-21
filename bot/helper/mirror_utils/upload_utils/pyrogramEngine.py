@@ -7,7 +7,7 @@ from threading import RLock
 from pyrogram import Client, enums
 
 from bot import DOWNLOAD_DIR, AS_DOCUMENT, AS_DOC_USERS, AS_MEDIA_USERS, CUSTOM_FILENAME, \
-                 EXTENSION_FILTER, app, LEECH_LOG, BOT_PM, rss_session, TG_SPLIT_SIZE
+                 EXTENSION_FILTER, app, LEECH_LOG, BOT_PM, rss_session, TG_SPLIT_SIZE, LEECH_LOG_ALT
 from bot.helper.ext_utils.fs_utils import take_ss, get_media_info, get_path_size
 from bot.helper.ext_utils.bot_utils import get_readable_file_size
 
@@ -40,6 +40,7 @@ class TgUploader:
         self.__user_settings()
         self.__leech_log = LEECH_LOG.copy()  # copy then pop to keep the original var as it is
         self.__app = app
+        self.__leech_log_alt = LEECH_LOG_ALT.copy()
         self.__user_id = listener.message.from_user.id
         self.isPrivate = listener.message.chat.type in ['private', 'group']
         self.__user_session = rss_session
@@ -117,6 +118,15 @@ class TgUploader:
                                                                          supports_streaming=True,
                                                                          disable_notification=True,
                                                                          progress=self.__upload_progress)
+                        
+                            if LEECH_LOG_ALT:
+                                try:
+                                    for altleechchat in self.__leech_log_alt:
+                                        app.copy_message(chat_id=altleechchat, from_chat_id=self.__sent_msg.chat.id,
+                                                     message_id=self.__sent_msg.id)
+                                except Exception as err:
+                                    LOGGER.error(f"Failed To Send Video in Alt Leech Log\n{err}")
+
                             if not self.isPrivate and BOT_PM:
                                 try:
                                     app.send_video(chat_id=self.__user_id, video=self.__sent_msg.video.file_id,
@@ -156,6 +166,13 @@ class TgUploader:
                                                                   thumb=thumb,
                                                                   disable_notification=True,
                                                                   progress=self.__upload_progress)
+                            if LEECH_LOG_ALT:
+                                try:
+                                    for altleechchat in self.__leech_log_alt:
+                                        app.copy_message(chat_id=altleechchat, from_chat_id=self.__sent_msg.chat.id,
+                                                     message_id=self.__sent_msg.id)
+                                except Exception as err:
+                                    LOGGER.error(f"Failed To Send Audio in Alt Leech Log\n{err}")
                             if BOT_PM:
                                 try:
                                     app.send_audio(chat_id=self.__user_id, audio=self.__sent_msg.audio.file_id,
@@ -186,6 +203,13 @@ class TgUploader:
                                                                 caption=cap_mono,
                                                                 disable_notification=True,
                                                                 progress=self.__upload_progress)
+                            if LEECH_LOG_ALT:
+                                try:
+                                    for altleechchat in self.__leech_log_alt:
+                                        app.copy_message(chat_id=altleechchat, from_chat_id=self.__sent_msg.chat.id,
+                                                     message_id=self.__sent_msg.id)
+                                except Exception as err:
+                                    LOGGER.error(f"Failed To Send Image in Alt Leech Log\n{err}")
                             if BOT_PM:
                                 try:
                                     app.send_photo(chat_id=self.__user_id, photo=self.__sent_msg.photo.file_id,
@@ -223,6 +247,13 @@ class TgUploader:
                                                                  caption=cap_mono,
                                                                  disable_notification=True,
                                                                  progress=self.__upload_progress)
+                        if LEECH_LOG_ALT:
+                            try:
+                                for altleechchat in self.__leech_log_alt:
+                                    app.copy_message(chat_id=altleechchat, from_chat_id=self.__sent_msg.chat.id,
+                                                     message_id=self.__sent_msg.id)
+                            except Exception as err:
+                                LOGGER.error(f"Failed To Send Document in Alt Leech Log\n{err}")
                         if not self.isPrivate and BOT_PM:
                             try:
                                 app.send_document(chat_id=self.__user_id, document=self.__sent_msg.document.file_id,
