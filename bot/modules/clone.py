@@ -48,11 +48,12 @@ def _clone(message, bot, multi=0):
             tag = message.from_user.mention_html(message.from_user.first_name)
     if reply_to:
         if len(link) == 0:
-            link = reply_to.text.strip()
+            link = reply_to.text.split(maxsplit=1)[0].strip()
         if reply_to.from_user.username:
             tag = f"@{reply_to.from_user.username}"
         else:
             tag = reply_to.from_user.mention_html(reply_to.from_user.first_name)
+    
     mesg = message.text.split('\n')
     message_args = mesg[0].split(' ', maxsplit=1)
     user_id = message.from_user.id
