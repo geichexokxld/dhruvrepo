@@ -21,9 +21,9 @@ PAGE_NO = 1
 
 
 class MirrorStatus:
-    STATUS_UPLOADING = "Uploading..."
-    STATUS_DOWNLOADING = "Downloading..."
-    STATUS_CLONING = "Cloning..."
+    STATUS_UPLOADING = "Uploading...📤"
+    STATUS_DOWNLOADING = "Downloading...📥"
+    STATUS_CLONING = "Cloning...♻️"
     STATUS_WAITING = "Queued..."
     STATUS_FAILED = "Failed. Cleaning Download..."
     STATUS_PAUSE = "Paused..."
@@ -105,9 +105,9 @@ def get_progress_bar_string(status):
     p = 0 if total == 0 else round(completed * 100 / total)
     p = min(max(p, 0), 100)
     cFull = p // 8
-    p_str = '▰' * cFull
+    p_str = '⬤' * cFull
     max_size = 100 // 8
-    p_str += '▱' * (max_size - cFull)
+    p_str += '○' * (max_size - cFull)
     p_str = f"[{p_str}]"
     return p_str
 
@@ -130,7 +130,7 @@ def get_readable_message():
                 MirrorStatus.STATUS_SPLITTING,
                 MirrorStatus.STATUS_SEEDING,
             ]:
-                msg += f"\n<code>{get_progress_bar_string(download)}</code> {download.progress()}"
+                msg += f"\n<b>{get_progress_bar_string(download)}</b> {download.progress()}"
                 if download.status() == MirrorStatus.STATUS_CLONING:
                     msg += f"\n<b>Cloned:</b> {get_readable_file_size(download.processed_bytes())} of {download.size()}"
                 elif download.status() == MirrorStatus.STATUS_UPLOADING:
@@ -165,8 +165,8 @@ def get_readable_message():
         if len(msg) == 0:
             return None, None
         bmsg = f"\n<b>___________________________________</b>"
-        bmsg += f"\n<b>Disk:</b> <code>{get_readable_file_size(disk_usage(DOWNLOAD_DIR).free)}</code>"
-        bmsg += f"<b> | UPTM:</b> <code>{get_readable_time(time() - botStartTime)}</code>"
+        bmsg += f"\n<b>Disk:</b> <b>{get_readable_file_size(disk_usage(DOWNLOAD_DIR).free)}</b>"
+        bmsg += f"<b> | UPTM:</b> <b>{get_readable_time(time() - botStartTime)}</b>"
         dlspeed_bytes = 0
         upspeed_bytes = 0
         for download in list(download_dict.values()):
