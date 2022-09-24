@@ -113,7 +113,7 @@ def get_progress_bar_string(status):
 
 def get_readable_message():
     with download_dict_lock:
-        msg = f"Powered By <b>Xd Mirror</b>"
+        msg = f"Powered By <b><u><i>Xd Mirror</i></u></b>"
         if STATUS_LIMIT is not None:
             tasks = len(download_dict)
             global pages
