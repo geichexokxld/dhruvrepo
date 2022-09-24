@@ -123,7 +123,7 @@ def get_readable_message():
                 globals()['PAGE_NO'] -= 1
         for index, download in enumerate(list(download_dict.values())[COUNT:], start=1):
             msg += f"\n\n<b>File Name:</b> <code>{escape(str(download.name()))}</code>"
-            msg += f"\n<b>Current Status:</b> <i>{download.status()}</i>"
+            msg += f"\n<b>Status:</b> <i>{download.status()}</i>"
             if download.status() not in [
                 MirrorStatus.STATUS_ARCHIVING,
                 MirrorStatus.STATUS_EXTRACTING,
@@ -152,7 +152,7 @@ def get_readable_message():
                 if download.message.chat.type != 'private':
                     try:
                         chatid = str(download.message.chat.id)[4:]
-                        msg += f'\n<b>Source Link: </b><a href="https://t.me/c/{chatid}/{download.message.message_id}">{download.message.from_user.first_name}</a> | <b>Id :</b> <code>{download.message.from_user.id}</code>'
+                        msg += f'\n<b>Task By: </b><a href="https://t.me/c/{chatid}/{download.message.message_id}">{download.message.from_user.first_name}</a> | <b>Id :</b> <code>{download.message.from_user.id}</code>'
                     except:
                         pass
                 else:
