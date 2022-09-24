@@ -59,12 +59,12 @@ def start(update, context):
     buttons = ButtonMaker()
     buttons.buildbutton("Report Group", "https://t.me/OTDiscussion")
     buttons.buildbutton("Alt Report Group", "https://t.me/mirrorsociety")
-    buttons.buildbutton("Mirror Group", "https://t.me/dhruvmirrorupdates")
-    buttons.buildbutton("Owner", "https://t.me/dhruv444")
+    buttons.buildbutton("Mirror Group", "https://t.me/xdmirror")
+    buttons.buildbutton("Owner", "https://t.me/shailendraxd")
     reply_markup = InlineKeyboardMarkup(buttons.build_menu(2))
     if CustomFilters.authorized_user(update) or CustomFilters.authorized_chat(update):
         start_string = f'''
-Welcome | Dhruv Mirror Bot is ready for you
+Welcome | Xd Mirror Bot is ready for you
 Type /{BotCommands.HelpCommand} to get a list of available commands
 '''
         sendMarkup(start_string, context.bot, update.message, reply_markup)
@@ -175,7 +175,7 @@ def main():
                      for index, link in enumerate(links, start=1):
                          msg += f" <a href='{link}'>{index}</a> \n"
                          if len(msg.encode()) > 4000:
-                             if 'Restarted successfully!' in msg and cid == chat_id:
+                             if 'As You Requested Shailendra🖤, I have Restarted successfully!' in msg and cid == chat_id:
                                  bot.editMessageText(msg, chat_id, msg_id, parse_mode='HTMl', disable_web_page_preview=True)
                                  osremove(".restartmsg")
                              else:
@@ -184,7 +184,7 @@ def main():
                                  except Exception as e:
                                      LOGGER.error(e)
                              msg = ''
-                if 'Restarted successfully!' in msg and cid == chat_id:
+                if 'As You Requested Shailendra🖤, I have Restarted successfully!' in msg and cid == chat_id:
                      bot.editMessageText(msg, chat_id, msg_id, parse_mode='HTMl', disable_web_page_preview=True)
                      osremove(".restartmsg")
                 else:
@@ -196,7 +196,7 @@ def main():
     if ospath.isfile(".restartmsg"):
         with open(".restartmsg") as f:
             chat_id, msg_id = map(int, f)
-        bot.edit_message_text("Restarted successfully!", chat_id, msg_id)
+        bot.edit_message_text("As You Requested Shailendra🖤, I have Restarted successfully!", chat_id, msg_id)
         osremove(".restartmsg")
     elif not notifier_dict and AUTHORIZED_CHATS:
         for id_ in AUTHORIZED_CHATS:
