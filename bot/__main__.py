@@ -44,7 +44,7 @@ def stats(update, context):
     mem_t = get_readable_file_size(memory.total)
     mem_a = get_readable_file_size(memory.available)
     mem_u = get_readable_file_size(memory.used)
-    stats = f'<b><i><u>NSFW Mirror Bot Statistics</u></i></b>\n\n'\
+    stats = f'<b><i><u>Xd Mirror Bot Statistics</u></i></b>\n\n'\
             f'<b>Updated:</b> <code>{last_commit}</code>\n'\
             f'<b>I am Working For:</b> <code>{currentTime}</code>\n'\
             f'<b>Total Disk:</b> <code>{total}</code> [{disk}% In use]\n'\
@@ -69,7 +69,7 @@ Type /{BotCommands.HelpCommand} to get a list of available commands
 '''
         sendMarkup(start_string, context.bot, update.message, reply_markup)
     else:
-        sendMarkup('Sorry, You cannot use me', context.bot, update.message, reply_markup)
+        sendMarkup('Bhag Bsdk', context.bot, update.message, reply_markup)
 
 def restart(update, context):
     restart_message = sendMessage("Restarting...", context.bot, update.message)
